@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Poll;
 use App\Problem;
 use App\Solution;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
-class ProblemsController extends Controller
+class PollsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +21,11 @@ class ProblemsController extends Controller
         $this->middleware('admin');
     }
 
+
     public function index()
     {
-        $problems = Problem::all();
-        return view('problem.index', compact('problems'));
+        $polls = Poll::all();
+        return view('polls.index', compact('polls'));
     }
 
     /**
@@ -31,8 +35,14 @@ class ProblemsController extends Controller
      */
     public function create()
     {
-        $problem = New Problem();
-        return view('problem.create', ["problem" => $problem]);
+
+        $poll = new Poll();
+        $problems = Problem::all();
+        $solutions = Solution::all();
+        $mobilities = DB::table('mobilities')->pluck('name_mobility');
+
+        return view('polls.create', ["poll" => $poll, "problems" => $problems, "solutions" => $solutions, "mobilities" => $mobilities]);
+
     }
 
     /**
@@ -43,22 +53,33 @@ class ProblemsController extends Controller
      */
     public function store(Request $request)
     {
-
-
+        $id = Auth::user()->id;
         $this->validate($request, [
-            'name_problem' => 'required'
+            'name_person' => 'required',
+            'document' => 'required',
+            'district' => 'required',
+            'cell_phone' => 'required',
+            'problem_id' => 'required',
+            'solution_id' => 'required',
+            'mobility_id' => 'required'
         ]);
 
-        $problem = new Problem;
-        $problem->name_problem = $request->name_problem;
+        $poll = new Poll();
+        $poll->name_person = $request->name_person;
+        $poll->document = $request->document;
+        $poll->district = $request->district;
+        $poll->cell_phone = $request->cell_phone;
+        $poll->problem_id = $request->problem_id;
+        $poll->solution_id = $request->solution_id;
+        $poll->mobility_id = $request->mobility_id;
+        $poll->user_id = $id;
+        $poll->state = '2';
 
-        if ($problem->save()) {
-            return redirect(url('/problems'));
+        if ($poll->save()) {
+            return redirect(url('/polls'));
         } else {
-            return view('problem.create', ["problem" => $problem]);
+            return view('polls.create', ["poll" => $poll]);
         }
-
-
     }
 
     /**
@@ -69,10 +90,7 @@ class ProblemsController extends Controller
      */
     public function show($id)
     {
-        $problem = Problem::find($id);
-        $solutions = Solution::all()->where('problem_id', $id);
-
-        return view('problem.show', ["problem" => $problem, "solutions" => $solutions  ]);
+        //
     }
 
     /**
@@ -83,8 +101,7 @@ class ProblemsController extends Controller
      */
     public function edit($id)
     {
-        $problem = Problem::find($id);
-        return view('problem.edit', ["problem" => $problem]);
+        //
     }
 
     /**
@@ -96,19 +113,7 @@ class ProblemsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name_problem' => 'required'
-        ]);
-
-        $problem =  Problem::find($id);
-        $problem->name_problem = $request->name_problem;
-
-        if ($problem->save()) {
-            return redirect(url('/problems'));
-        } else {
-            return view('problems.edit', ["problem" => $problem]);
-        }
-
+        //
     }
 
     /**
@@ -119,7 +124,6 @@ class ProblemsController extends Controller
      */
     public function destroy($id)
     {
-        Problem::destroy($id);
-        return redirect(url('/problems'));
+        //
     }
 }

@@ -6,22 +6,24 @@ use App\Problem;
 use App\Solution;
 use Illuminate\Http\Request;
 
-class ProblemsController extends Controller
+class SolutionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function __construct()
     {
         $this->middleware('admin');
     }
 
+
     public function index()
     {
-        $problems = Problem::all();
-        return view('problem.index', compact('problems'));
+        $solutions = Solution::all();
+        return view('solution.index', compact('solutions'));
     }
 
     /**
@@ -31,8 +33,9 @@ class ProblemsController extends Controller
      */
     public function create()
     {
-        $problem = New Problem();
-        return view('problem.create', ["problem" => $problem]);
+        $solution = New Solution();
+        $problems = Problem::all()->pluck('name_problem', 'id');
+        return view('solution.create', ["solution" => $solution, "problems" => $problems ]);
     }
 
     /**
@@ -43,21 +46,21 @@ class ProblemsController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $this->validate($request, [
-            'name_problem' => 'required'
+            'name_solution' => 'required',
+            'problem_id' => 'required'
         ]);
 
-        $problem = new Problem;
-        $problem->name_problem = $request->name_problem;
+        $solution = new Solution();
+        $solution->name_solution = $request->name_solution;
+        $solution->problem_id = $request->problem_id;
 
-        if ($problem->save()) {
-            return redirect(url('/problems'));
+
+        if ($solution->save()) {
+            return redirect(url('/solutions'));
         } else {
-            return view('problem.create', ["problem" => $problem]);
+            return view('solution.create', ["solution" => $solution]);
         }
-
 
     }
 
@@ -69,10 +72,7 @@ class ProblemsController extends Controller
      */
     public function show($id)
     {
-        $problem = Problem::find($id);
-        $solutions = Solution::all()->where('problem_id', $id);
-
-        return view('problem.show', ["problem" => $problem, "solutions" => $solutions  ]);
+        //
     }
 
     /**
@@ -83,8 +83,9 @@ class ProblemsController extends Controller
      */
     public function edit($id)
     {
-        $problem = Problem::find($id);
-        return view('problem.edit', ["problem" => $problem]);
+        $solution = Solution::find($id);
+        $problems = Problem::all()->pluck('name_problem', 'id');
+        return view('solution.edit', ["solution" => $solution, "problems" => $problems  ]);
     }
 
     /**
@@ -97,18 +98,20 @@ class ProblemsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name_problem' => 'required'
+            'name_solution' => 'required',
+            'problem_id' => 'required'
         ]);
 
-        $problem =  Problem::find($id);
-        $problem->name_problem = $request->name_problem;
+        $solution =  Solution::find($id);
+        $solution->name_solution = $request->name_solution;
+        $solution->problem_id = $request->problem_id;
 
-        if ($problem->save()) {
-            return redirect(url('/problems'));
+
+        if ($solution->save()) {
+            return redirect(url('/solutions'));
         } else {
-            return view('problems.edit', ["problem" => $problem]);
+            return view('solution.edit', ["solution" => $solution]);
         }
-
     }
 
     /**
@@ -119,7 +122,8 @@ class ProblemsController extends Controller
      */
     public function destroy($id)
     {
-        Problem::destroy($id);
-        return redirect(url('/problems'));
+        Solution::destroy($id);
+        return redirect(url('/solutions'));
     }
+
 }

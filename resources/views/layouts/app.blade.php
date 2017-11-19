@@ -12,20 +12,26 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Oleo+Script">
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
 
         <nav>
             <ul id="slide-out" class="side-nav">
-                <li><a href="{{ url('/') }}" class="brand-logo" style="padding-left: 10px">{{ config('app.name', 'Encuesta') }}</a></li>
+                <li><a href="#!" class="brand-logo" style="padding-left: 10px">{{ config('app.name', 'Encuesta') }}</a></li>
                 @if (Route::has('login'))
                     @if (Auth::check())
                         <li> <a class="waves-effect" href="{{ url('/home') }}">Home</a></li>
-                        <li> <a class="waves-effect" href="{{ url('/problems') }}">Problemas</a></li>
-                        <li> <a class="waves-effect"href="{{ url('/home') }}">Encuestas</a></li>
+                        @if( Auth::user()->user_type == 'admin')
+                            <li> <a class="waves-effect" href="{{ url('/problems') }}">Problemas</a></li>
+                            <li> <a class="waves-effect" href="{{ url('/solutions') }}">Soluciones</a></li>
+                            <li> <a class="waves-effect" href="{{ url('/polls') }}">Encuestas</a></li>
+                        @endif
                         <li class="no-padding">
                             <ul class="collapsible collapsible-accordion">
                                 <li>
@@ -55,7 +61,7 @@
                 @endif
             </ul>
             <ul class="left hide-on-med-and-down">
-                <li><a href="{{ url('/') }}" class="brand-logo" style="padding-left: 10px">
+                <li><a href="#!" class="brand-logo" style="padding-left: 10px">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </li>
@@ -65,10 +71,13 @@
                 @if (Route::has('login'))
                     @if (Auth::check())
                         <li> <a class="waves-effect" href="{{ url('/home') }}">Home</a></li>
-                        <li> <a class="waves-effect" href="{{ url('/problems') }}">Problemas</a></li>
-                        <li> <a class="waves-effect" href="#">Encuestas</a></li>
-                        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
-                        <ul id='dropdown1' class='right dropdown-content'>
+                        @if( Auth::user()->user_type == 'admin')
+                            <li> <a class="waves-effect" href="{{ url('/problems') }}">Problemas</a></li>
+                            <li> <a class="waves-effect" href="{{ url('/solutions') }}">Soluciones</a></li>
+                            <li> <a class="waves-effect" href="{{ url('/polls') }}">Encuestas</a></li>
+                        @endif
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
+                        <ul id='dropdown' class='right dropdown-content'>
                             <li>
                                 <a href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
@@ -96,15 +105,16 @@
 
     </div>
 
-    <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('js')
+
     <script>
         $(document).ready(function() {
-            $(".dropdown-content").dropdown();
             $(".button-collapse").sideNav();
+            $(".dropdown-button").dropdown();
         });
     </script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
 
 </body>

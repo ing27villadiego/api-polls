@@ -13,7 +13,7 @@
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="input-field col s12 {{ $errors->has('full_name') ? ' has-error' : '' }}">
-                                <input id="email" type="text" class="validate" name="full_name" value="{{ old('name') }}" placeholder="nombre completo" required autofocus>
+                                <input id="email" type="text" class="validate" name="full_name" value="{{ old('full_name') }}" placeholder="nombre completo" required autofocus>
                                 <label for="name" class="col-md-4 control-label">Nombre completo</label>
                                 @if ($errors->has('full_name'))
                                     <span class="help-block">

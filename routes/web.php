@@ -23,6 +23,9 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('problems', 'ProblemsController');
+    Route::resource('polls', 'PollsController');
+    Route::resource('/solutions', 'SolutionController');
+    Route::post('/pollscandidate', 'HomeController@store');
 
 
 });

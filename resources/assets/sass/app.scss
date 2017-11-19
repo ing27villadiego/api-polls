@@ -11,6 +11,38 @@ $secondary-color: #125688;
 //materialize
 @import "~materialize-css/sass/materialize.scss";
 
+
+.title-show{
+  color: $secondary-color !important;
+  font-family: 'Oleo Script';
+  font-size: 42px;
+}
+
+
+.container-frase{
+  margin-top: 30px;
+}
+
+.container-frase>span{
+  font-size: 20px;
+  color: $secondary-color !important;
+}
+
+.container-home{
+  color: $secondary-color !important;
+  font-family: 'Oleo Script';
+  font-size: 42px;
+}
+
+.container-home>h1{
+  margin-bottom: 0px;
+}
+
+.container-home>h4,h6{
+  margin: 0px;
+}
+
+
 .sign-up,
 .sing-in{
   color: $secondary-color !important;

@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Problem extends Model
+class Solution extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable= ['name_solution', 'problem_id'];
 
-    public function solutions ()
+    public function problem()
     {
-        return $this->hasMany(Solution::class);
+        return $this->belongsTo(Problem::class);
     }
 
 
@@ -18,6 +18,5 @@ class Problem extends Model
     {
         return $this->hasMany(Poll::class);
     }
-
 
 }

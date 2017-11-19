@@ -1,21 +1,18 @@
-<div class="row">
-    <div class="col-md-6">
-        {!! Form::open(['route' => ['/problems/create', $city->id], 'method'=>'PUT', 'autocomplete'=>'off']) !!}
-        {{ csrf_field() }}
-        <fieldset>
-            <div class="form-group">
-                {{Form::label('name','Nombre Ciudad')}}
-                {{Form::text('name',$city->name ,['class' => 'form-control', 'placeholder' => 'nombre de la ciudad'])}}
-                <span class="alert-danger"> {{ $errors->first('name') }}</span>
-            </div>
+{!! Form::open(['url' => $url, 'method' => $method, 'class' => 'col s8 offset-s1']) !!}
+{{ csrf_field() }}
 
-            <div class="form-group">
-                {{Form::label('letter','Letra ciudad')}}
-                {{Form::text('letter',$city->letter ,['class' => 'form-control', 'placeholder' => 'letra de la ciudad'])}}
-                <span class="alert-danger"> {{ $errors->first('letter') }}</span>
-            </div>
-            <button type="submit" class="btn btn-success pull-right">Guardar</button>
-        </fieldset>
-        {!! Form::close() !!}
+<div class="row">
+    <div class="input-field col s12">
+        {{  Form::text('name_problem', $problem->name_problem, ['class' => 'validate', 'placeholder' => 'Nombre del problema', 'autofocus']) }}
+        {{  Form::label('name_problem', 'Nombre del problema') }}
     </div>
 </div>
+
+<div class="row">
+    <div class="input-field col s12">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Guardar
+            <i class="material-icons right">save</i>
+        </button>
+    </div>
+</div>
+{!! Form::close() !!}

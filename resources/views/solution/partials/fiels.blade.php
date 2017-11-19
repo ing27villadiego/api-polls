@@ -3,8 +3,13 @@
 
 <div class="row">
     <div class="input-field col s12">
-        {{  Form::text('name_problem', $problem->name_problem, ['class' => 'validate', 'placeholder' => 'Nombre del problema', 'autofocus']) }}
-        {{  Form::label('name_problem', 'Nombre del problema') }}
+        {{  Form::text('name_solution', $solution->name_solution, ['class' => 'validate', 'placeholder' => 'Nombre de la solucion', 'autofocus']) }}
+        {{  Form::label('name_solution', 'Nombre de la solucion') }}
+    </div>
+
+    <div class="input-field col s12 m10">
+        {!! Form::select('problem_id',$problems,null, ['class'=>'input-sm col s12 m8' ,'placeholder'=>'Asignele un problema']) !!}
+        <label class="control-label">Asignele un problema</label>
     </div>
 </div>
 

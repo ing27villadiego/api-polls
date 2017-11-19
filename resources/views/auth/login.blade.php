@@ -17,7 +17,7 @@
                                 <label for="email">Correo</label>
                                 @if ($errors->has('email'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong class="red">{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -28,7 +28,7 @@
                                 <label for="password">Contraseña</label>
                                 @if ($errors->has('password'))
                                     <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
+                                    <strong class="red"> {{ $errors->first('password') }}</strong>
                                 </span>
                                 @endif
                             </div>

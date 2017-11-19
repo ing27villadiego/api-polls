@@ -116,6 +116,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name_problem' => 'name problem',
+
+    ],
 
 ];
